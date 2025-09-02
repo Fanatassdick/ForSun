@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Валентинка</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: white;
+      font-family: 'Arial', sans-serif;
+      transition: background 3s ease;
+    }
+
+    
+    .heart {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -60px;
+      left: 0;
+    }
+    .heart::after {
+      left: 60px;
+      top: 0;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1) rotate(-45deg); }
+      50% { transform: scale(1.2) rotate(-45deg); }
+      100% { transform: scale(1) rotate(-45deg); }
+    }
+
+    
+    .text {
+      position: absolute;
+      top: 70%;
+      font-size: 26px;
+      color: #333;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 1s;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    
+    body.dark {
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    }
+
+    .stars {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    
+    .falling-heart {
+      position: absolute;
+      top: -10px;
+      color: pink;
+      font-size: 20px;
+      animation: fall 6s linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      text-shadow: 0 0 10px red;
+      opacity: 0;
+      animation: showText 3s forwards;
+      animation-delay: 6s;
+    }
+    @keyframes showText {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart"></div>
+  <div class="text">Натисни на серце</div>
+  <div class="stars"></div>
+  <div class="center-text">❤️Я зроблю все, щоб ти посміхалась❤️</div>
+
+  <script>
+    
+    setTimeout(() => {
+      document.querySelector(".heart").style.display = "none";
+      document.querySelector(".text").style.display = "none";
+      document.body.classList.add("dark");
+
+      
+      const stars = document.querySelector(".stars");
+      for (let i = 0; i < 100; i++) {
+        let star = document.createElement("span");
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.animationDuration = 2 + Math.random() * 3 + "s";
+        stars.appendChild(star);
+      }
+
+      
+      setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("falling-heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (15 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }, 300);
+
+    }, 4000);
+  </script>
+</body>
+</html>
